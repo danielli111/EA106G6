@@ -22,6 +22,8 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 		"SELECT SHOPNO,SHOPACT,SHOPPW,SHOPNAME,SHOPLOC,SHOPCY,SHOPPHONE,SHOPIMG,STATUS FROM SHOP WHERE SHOPNO = ?";
 	private static final String UPDATE = 
 		"UPDATE SHOP SET SHOPACT=?, SHOPPW=?, SHOPNAME=?, SHOPLOC=?, SHOPCY=?, SHOPPHONE=? ,SHOPIMG=? WHERE SHOPNO = ?";
+	private static final String LOGIN = 
+			"SELECT * FROM SHOP WHERE SHOPACT=? AND SHOPPW=?";
 	private static final String UPDATE_BY_MANAGER = 
 			"UPDATE SHOP SET STATUS=? WHERE SHOPNO = ?";
 	@Override
@@ -256,6 +258,75 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 		}
 		return list;
 	}
+	
+	@Override
+	public ShopVO login(String shopact, String shoppw) {
+		ShopVO shopVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(LOGIN);
+
+			pstmt.setString(1, shopact);
+			pstmt.setString(2, shoppw);
+
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				// shopVo 也稱為 Domain objects
+				shopVO = new ShopVO();
+				shopVO.setShopno(rs.getString("shopno"));
+				shopVO.setShopact(rs.getString("shopact"));
+				shopVO.setShoppw(rs.getString("shoppw"));
+				shopVO.setShopname(rs.getString("shopname"));
+				shopVO.setShoploc(rs.getString("shoploc"));
+				shopVO.setShopcy(rs.getString("shopcy"));
+				shopVO.setShopphone(rs.getInt("shopphone"));
+				shopVO.setShopimg(rs.getBytes("shopimg"));
+				shopVO.setStatus(rs.getInt("status"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return shopVO;
+	}
+	
+	
 	// 使用InputStream資料流方式
 		public static InputStream getPictureStream(String path) throws IOException {
 			File file = new File(path);
@@ -278,27 +349,30 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 
 			return baos.toByteArray();
 		}
+		
+		
+		
 	public static void main(String[] args) {
 
 		ShopJDBCDAO dao = new ShopJDBCDAO();
 		ShopService shopSvc = new ShopService();
-		List<ShopVO> list = shopSvc.getAll();
+//		List<ShopVO> list = shopSvc.getAll();
 		// 新增
-		ShopVO shopVO1 = new ShopVO();
-		shopVO1.setShopact("apple");
-		shopVO1.setShoppw("z1234");
-		shopVO1.setShopname("大衛");
-		shopVO1.setShoploc("桃園市中壢區中正路");
-		shopVO1.setShopcy("六人桌*10");
-		shopVO1.setShopphone(933103579);
-		try {
-			byte[] pic = getPictureByteArray("WebContent/font-end/shop/images/game.png");
-			shopVO1.setShopimg(pic);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-		shopVO1.setStatus(1);
-		dao.insert(shopVO1);
+//		ShopVO shopVO1 = new ShopVO();
+//		shopVO1.setShopact("apple");
+//		shopVO1.setShoppw("z1234");
+//		shopVO1.setShopname("大衛");
+//		shopVO1.setShoploc("桃園市中壢區中正路");
+//		shopVO1.setShopcy("六人桌*10");
+//		shopVO1.setShopphone(933103579);
+//		try {
+//			byte[] pic = getPictureByteArray("WebContent/font-end/shop/images/game.png");
+//			shopVO1.setShopimg(pic);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}	
+//		shopVO1.setStatus(1);
+//		dao.insert(shopVO1);
 //
 //		// 修改
 //		ShopVO shopVO2 = new ShopVO();
@@ -314,16 +388,16 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 
 
 //		// 查詢
-//		ShopVO shopVO3 = dao.findByPrimaryKey("DS00001");
-//		System.out.print(shopVO3.getShopno() + ",");
-//		System.out.print(shopVO3.getShopact() + ",");
-//		System.out.print(shopVO3.getShoppw() + ",");
-//		System.out.print(shopVO3.getShopname() + ",");
-//		System.out.print(shopVO3.getShoploc() + ",");
-//		System.out.print(shopVO3.getShopcy() + ",");
-//		System.out.println(shopVO3.getShopphone() + ",");
-//		System.out.println(shopVO3.getStatus());
-//		System.out.println("---------------------");
+		ShopVO shopVO3 = dao.findByPrimaryKey("DS00001");
+		System.out.print(shopVO3.getShopno() + ",");
+		System.out.print(shopVO3.getShopact() + ",");
+		System.out.print(shopVO3.getShoppw() + ",");
+		System.out.print(shopVO3.getShopname() + ",");
+		System.out.print(shopVO3.getShoploc() + ",");
+		System.out.print(shopVO3.getShopcy() + ",");
+		System.out.println(shopVO3.getShopphone() + ",");
+		System.out.println(shopVO3.getStatus());
+		System.out.println("---------------------");
 //
 //		// 查詢
 //		List<ShopVO> list = dao.getAll();
@@ -339,4 +413,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 //			System.out.println();
 //		}
 	}
+
+
+	
 }

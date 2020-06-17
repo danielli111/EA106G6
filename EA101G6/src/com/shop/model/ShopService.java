@@ -53,4 +53,8 @@ public class ShopService {
 	public List<ShopVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public ShopVO compare(String shopact, String shoppw) {
+		return dao.login(shopact, shoppw);
+	}
 }

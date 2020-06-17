@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=BIG5"
     pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.shop.model.*"%>
+
+<%
+	ShopVO account = (ShopVO)session.getAttribute("account");
+%>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -54,10 +61,22 @@
 
             <div class="float-right">
 
-            <a href="#" class="text-white"><span class="mr-2 text-white icon-twitter"></span> <span class="d-none d-md-inline-block">會員登入</span></a>
-            <span class="mx-md-2 d-inline-block"></span>
-            <a href="#" class="text-white"><span class="mr-2 text-white icon-instagram"></span> <span class="d-none d-md-inline-block">店家登入</span></a>
-
+            <a href="#" class="text-white"><span class="mr-2 text-white icon-twitter"></span> <span class="d-none d-md-inline-block">會員登入</span></a>          
+            <c:if test="${not empty account}">		
+							 <form method="post" action="shop.do">
+							 <span class="mx-md-2 d-inline-block"></span>
+							 <a href="update_shop_input.jsp" class="text-white">
+<%-- 							 <input type="submit" name="getOne_For_Update" value="${account.getShopno()}" class="text-white"> --%>
+							 <span class="mr-2 text-white icon-instagram"></span>
+							 <input type="hidden" name="action" value="getOne_For_Update"> <input
+							 type="hidden" name="shopno" value="<%=account.getShopno()%>">
+							 <input class="d-none d-md-inline-block" type="submit" value="${account.getShopname()}"></a>
+<%-- 							 <span class="d-none d-md-inline-block">${account.getShopname()}</span> --%>
+							 </form>
+			</c:if>
+			<c:if test="${empty account}">		
+							 <span class="mx-md-2 d-inline-block"></span><a href="login.jsp" class="text-white"><span class="mr-2 text-white icon-instagram"></span> <span class="d-none d-md-inline-block">店家登入</span></a>
+			</c:if>
             </div>
 
           </div>

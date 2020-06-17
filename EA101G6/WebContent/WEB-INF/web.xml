@@ -19,4 +19,14 @@
 		<url-pattern>/font-end/shop/shop.do</url-pattern>
 		<url-pattern>/back-end/shop/shop.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GameServlet</servlet-name>
+		<servlet-class>com.game.controller.GameServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GameServlet</servlet-name>
+		<url-pattern>/font-end/game/game.do</url-pattern>
+		<url-pattern>/back-end/game/game.do</url-pattern>
+	</servlet-mapping>
 </web-app>

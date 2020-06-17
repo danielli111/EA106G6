@@ -1,13 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
-<%@ page import="com.shop.model.*"%>
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.game.model.*"%>
 
 <%
-	ShopVO shopVO = null;
-	if(request.getAttribute("shopVO")!=null){
-		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
-	}else{
-		shopVO = (ShopVO) session.getAttribute("account");
-	}	
+// 	GameService gameSvc = new GameService();
+	GameVO gameVO = null;
+	gameVO = (GameVO) request.getAttribute("gameVO"); //gameServlet.java (Concroller) 存入req的gameVO物件 (包括幫忙取出的gameVO, 也包括輸入資料錯誤時的shopVO物件)
+
 %>
 
 <!doctype html>
@@ -76,7 +76,8 @@
 							class="d-none d-md-inline-block">會員登入</span></a>
 						<c:if test="${not empty account}">
 							<span class="mx-md-2 d-inline-block"></span>
-							<a href="update_shop_input.jsp" class="text-white"><span
+							<a href="update_shop_input.jsp" class="text-white" name="action"
+								value="getOne_For_Update"><span
 								class="mr-2 text-white icon-instagram"></span> <span
 								class="d-none d-md-inline-block">${account.getShopname()}</span></a>
 						</c:if>
@@ -104,7 +105,7 @@
 
 
 				<div class="site-logo">
-					<a href="index.jsp" class="text-black"><span
+					<a href="../shop/index.jsp" class="text-black"><span
 						class="text-primary">Unearth</span></a>
 				</div>
 
@@ -113,7 +114,7 @@
 
 						<ul
 							class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-							<li><a href="#home-section" class="nav-link">首頁</a></li>
+							<li><a href="../shop/index.jsp" class="nav-link">首頁</a></li>
 
 							<li class="has-children"><a href="#about-section"
 								class="nav-link">會員專區</a>
@@ -138,7 +139,7 @@
 
 							<li><a href="#testimonials-section" class="nav-link">揪團區</a></li>
 							<!--            <li><a href="#blog-section" class="nav-link">店家列表</a></li> -->
-							<li><a href="listAllShop.jsp" class="nav-link">店家列表</a></li>
+							<li><a href="../shop/listAllShop.jsp" class="nav-link">店家列表</a></li>
 							<li><a href="#contact-section" class="nav-link">討論區</a></li>
 						</ul>
 					</nav>
@@ -155,7 +156,8 @@
 
 	</header>
 
-	<title>店家</title>
+	<title>遊戲列表</title>
+
 	<style>
 table {
 	margin-top: 10px;
@@ -180,8 +182,8 @@ tr:nth-child(odd) {
 }
 
 img {
-	width: 300px;
-	height: 200px;
+	width: 50px;
+	height: 50px;
 }
 
 h4 {
@@ -189,30 +191,105 @@ h4 {
 }
 </style>
 </head>
-<h4 style="margin-left: 20px;">
-	<a href="index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
+<h4>
+	<a href="../shop/index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
 </h4>
+
 <jsp:include page="select_page.jsp" flush="true">
 	<jsp:param name="" value="" />
 </jsp:include>
+
 <table>
-	<tr>
-		<th>店家名稱</th>
-		<th>位置</th>
-		<th>場地</th>
-		<th>電話</th>
-		<th>店家圖片</th>
+	<tr style="background-color: #FFFFFF; border: 0px; font:;">
+		<td style="background-color: #FFFFFF; border: 0px;">
+			<h3>遊戲列表</h3>
+		</td>
 	</tr>
-	<tr>
-		<td><%=shopVO.getShopname()%></td>
-		<td><%=shopVO.getShoploc()%></td>
-		<td><%=shopVO.getShopcy()%></td>
-		<td><%=shopVO.getShopphone()%></td>
-		<td><img style="width: 300px; height: 200px"
-			src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></td>
-	</tr>
-
 </table>
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color: red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color: red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
+<div>
 
+<table>
+		<h4>
+			<a href="../shop/index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
+		</h4>
+	</table>
+
+	<h3>資料修改:</h3>
+
+	<%-- 錯誤表列 --%>
+	<c:if test="${not empty errorMsgs}">
+		<font style="color: red">請修正以下錯誤:</font>
+		<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color: red">${message}</li>
+			</c:forEach>
+		</ul>
+	</c:if>
+
+	<FORM METHOD="post" ACTION="game.do" name="form1"
+		enctype="multipart/form-data">
+		<table>
+			<tr>
+				<td>遊戲編號:</td>
+				<td><%=gameVO.getGmno()%></td>
+			</tr>
+			<tr>
+				<td>遊戲名稱:</td>
+				<td><input type="TEXT" name="gmname" size="45"
+					value="<%=gameVO.getGmname()%>" /></td>
+			</tr>
+			<tr>
+				<td>遊戲圖片:</td>
+				<td><input type="file" id="myFile" name="gmimg">
+					<div type="file" id="preview">
+						<img src="<%=request.getContextPath()%>/GameShowImg?gmno=${gameVO.gmno}" />
+					</div></td>
+			</tr>
+
+
+
+		</table>
+		<br> <input type="hidden" name="action" value="update"> <input
+			type="hidden" name="shopno" value="<%=gameVO.getGmno()%>">
+		<input type="submit" value="送出修改">
+	</FORM>
 </body>
+
+
+
+<script>
+	function init() {
+		var myFile = document.getElementById("myFile");
+		var filename = document.getElementById("filename");
+		var preview = document.getElementById('preview');
+		myFile.addEventListener('change', function(e) {
+			var files = myFile.files;
+			if (files !== null && files.length > 0) {
+				var file = files[0];
+				if (file.type.indexOf('image') > -1) {
+					// 					filename.value = file.name;
+					var reader = new FileReader();
+					reader.addEventListener('load', function(e) {
+						var result = e.target.result;
+						console.log(result);
+						var img = document.createElement('img');
+						img.src = result;
+						preview.append(img);
+					});
+					reader.readAsDataURL(file);
+				}
+			}
+		});
+	}
+	window.onload = init;
+</script>
 </html>

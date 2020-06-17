@@ -9,18 +9,21 @@ public class GameService {
 	public GameService() {
 		dao = new GameJDBCDAO();
 	}
-	public GameVO addGame(String gmno, String gmname) {
+	public GameVO addGame(String gmname, byte[] gmimg) {
 		GameVO gameVO = new GameVO();
 		return gameVO;
 	}
-	public GameVO updateGame(String gmno, String gmname) {
+	public GameVO updateGame(String gmno, String gmname, byte[] gmimg) {
 		GameVO gameVO = new GameVO();
 		return gameVO;
 	}
-	public List<GameVO> getOneGame(String gmname) {
-		return dao.findByGmname(gmname);
+	public List<GameVO> getSomeGames(String gmname) {
+		return dao.findByGmnames(gmname);
 	}
 	public List<GameVO> getAll() {
 		return dao.getAll();
+	}
+	public GameVO getOneGame(String gmno) {
+		return dao.findByPrimaryKey(gmno);
 	}
 }

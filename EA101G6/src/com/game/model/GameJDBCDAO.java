@@ -18,14 +18,15 @@ public class GameJDBCDAO implements GameDAO_interface{
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO game (gmno, gmname) VALUES ('DG'||LPAD(TO_CHAR(GAME_seq.NEXTVAL), 5, '0'), ?)";
+			"INSERT INTO GAME (GMNO, GMNAME,GMIMG) VALUES ('DG'||LPAD(TO_CHAR(GAME_SEQ.NEXTVAL), 5, '0'), ?, ?)";
 	private static final String UPDATE = 
-			"UPDATE game set gmname = ? where gmno = ?";
+			"UPDATE GAME SET GMNAME = ?, GMIMG = ? WHERE GMNO = ?";
 	private static final String GET_ALL_STMT = 
-			"SELECT * FROM game order by gmno";
+			"SELECT * FROM GAME ORDER BY GMNO";
+	private static final String GET_SOME_STMT = 
+			"SELECT GMNO, GMNAME, GMIMG FROM GAME WHERE GMNAME LIKE ?";
 	private static final String GET_ONE_STMT = 
-			"SELECT gmno, gmname FROM game where gmname LIKE ?";
-		
+			"SELECT GMNO, GMNAME, GMIMG FROM GAME WHERE GMNO = ?";
 	
 
 	@Override
@@ -40,7 +41,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, gameVO.getGmname());
-			
+			pstmt.setBytes(2, gameVO.getGmimg());
 			pstmt.executeUpdate();
 			
 			
@@ -80,7 +81,8 @@ public class GameJDBCDAO implements GameDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 			
 			pstmt.setString(1, gameVO.getGmname());
-			pstmt.setString(2, gameVO.getGmno());
+			pstmt.setBytes(2, gameVO.getGmimg());
+			pstmt.setString(3, gameVO.getGmno());
 			
 			pstmt.executeUpdate();
 			
@@ -109,7 +111,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 	}
 
 	@Override
-	public List<GameVO> findByGmname(String gmname) {
+	public List<GameVO> findByGmnames(String gmname) {
 		List<GameVO> list = new ArrayList<GameVO>();
 		GameVO gameVO = null;
 		
@@ -121,7 +123,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 			
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt = con.prepareStatement(GET_SOME_STMT);
 			
 			pstmt.setString(1, "%"+gmname+"%");
 			
@@ -131,6 +133,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 				gameVO = new GameVO();
 				gameVO.setGmno(rs.getString("gmno"));
 				gameVO.setGmname(rs.getString("gmname"));
+				gameVO.setGmimg(rs.getBytes("gmimg"));
 				list.add(gameVO);
 			}
 			
@@ -186,6 +189,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 				gameVO = new GameVO();
 				gameVO.setGmno(rs.getString("gmno"));
 				gameVO.setGmname(rs.getString("gmname"));
+				gameVO.setGmimg(rs.getBytes("gmimg"));
 				list.add(gameVO);
 			}
 			
@@ -221,9 +225,65 @@ public class GameJDBCDAO implements GameDAO_interface{
 		return list;
 	}
 
+	@Override
+	public GameVO findByPrimaryKey(String gmno) {
+		GameVO gameVO = null;	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
+			pstmt.setString(1, gmno);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				gameVO = new GameVO();
+				gameVO.setGmno(rs.getString("gmno"));
+				gameVO.setGmname(rs.getString("gmname"));
+				gameVO.setGmimg(rs.getBytes("gmimg"));
+			}
+			
+		}catch(ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		}catch(SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return gameVO;
+	}
+	
 	public static void main(String[] args) {
 		GameJDBCDAO dao = new GameJDBCDAO();
-
+		GameService gameSvc = new GameService();
 		// 新增
 //		GameVO gameVO1 = new GameVO();
 //		gameVO1.setGmname("欸欸");
@@ -237,12 +297,12 @@ public class GameJDBCDAO implements GameDAO_interface{
 
 
 		// 查詢
-		List<GameVO> list = dao.findByGmname("人");
-		for (GameVO game : list) {
-		System.out.print(game.getGmno() + ",");
-		System.out.print(game.getGmname() + ",");
-		System.out.println("---------------------");
-		}
+//		List<GameVO> list = dao.findByGmnames("人");
+//		for (GameVO game : list) {
+//		System.out.print(game.getGmno() + ",");
+//		System.out.print(game.getGmname() + ",");
+//		System.out.println("---------------------");
+//		}
 
 		// 查詢
 //		List<GameVO> list2 = dao.getAll();
@@ -251,5 +311,13 @@ public class GameJDBCDAO implements GameDAO_interface{
 //			System.out.print(game.getGmname());
 //			System.out.println("---------------------");
 //		}
+		
+		GameVO gameVo = gameSvc.getOneGame("DG00001");
+		System.out.print(gameVo.getGmno() + ",");
+		System.out.print(gameVo.getGmname() + ",");
+		System.out.println("---------------------");
+		
 	}
+
+	
 }

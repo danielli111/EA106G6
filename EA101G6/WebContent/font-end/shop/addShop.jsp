@@ -48,7 +48,7 @@
 
 				<div class="float-right">
 					<a href="#" class="text-white"><span class="d-md-inline-block"><img
-							class="icon" src="images/User-icon.png">會員登入</span></a> <a href="login/login.jsp"
+							class="icon" src="images/User-icon.png">會員登入</span></a> <a href="login.jsp"
 						class="text-white"><span class="d-md-inline-block"><img
 							class="icon" src="images/man-icon.png">店家登入</span></a>
 				</div>
@@ -95,7 +95,7 @@
 						<li><a href="#mall" class="nav-link">商城</a></li>
 						<li><a href="#shop" class="nav-link">市集</a></li>
 						<li><a href="#play" class="nav-link">揪團區</a></li>
-						<li><a href="#store" class="nav-link">店家列表</a></li>
+						<li><a href="listAllShop.jsp" class="nav-link">店家列表</a></li>
 						<li><a href="#forum" class="nav-link">討論區</a></li>
 					</ul>
 				</nav>

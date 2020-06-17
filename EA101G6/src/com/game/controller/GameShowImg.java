@@ -1,4 +1,4 @@
-package com.shop.controller;
+package com.game.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,11 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.shop.model.ShopService;
-import com.shop.model.ShopVO;
+import com.game.model.*;
 
-@WebServlet("/ShopShowImg")
-public class ShopShowImg extends HttpServlet {
+@WebServlet("/GameShowImg")
+public class GameShowImg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -25,21 +24,19 @@ public class ShopShowImg extends HttpServlet {
 		ServletOutputStream out=res.getOutputStream();
 		
             res.setContentType("image/jpeg");
-            String shopno=req.getParameter("shopno");
-            String account=req.getParameter("shopact");
+            String gmno=req.getParameter("gmno");
+//            String account=req.getParameter("shopact");
             HttpSession session = req.getSession();
-            ShopService shopSvc = new ShopService();
-            ShopVO shopVo=null;
+            GameService gameSvc = new GameService();
+            GameVO gameVo=null;
             /*用session判斷是否從update進來*/
-            if(session.getAttribute(shopno)!=null) {
-            	shopVo=(ShopVO)session.getAttribute(shopno);
-            }else if(session.getAttribute(account)!=null) {
-            	shopVo=(ShopVO)session.getAttribute(account);
+            if(session.getAttribute(gmno)!=null) {
+            	gameVo=(GameVO)session.getAttribute(gmno);
             }else{
-            	shopVo=shopSvc.getOneShop(shopno);
-            	session.setAttribute(shopno,shopVo);
+            	gameVo=gameSvc.getOneGame(gmno);
+            	session.setAttribute(gmno,gameVo);
             }
-            out.write(shopVo.getShopimg());
+            out.write(gameVo.getGmimg());
             
 		
 	}

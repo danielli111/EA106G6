@@ -3,7 +3,13 @@
 <%@ page import="com.shop.model.*"%>
 
 <%
-	ShopVO shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
+// 	ShopService shopSvc = new ShopService();
+	ShopVO shopVO = null;
+	if(request.getAttribute("shopVO")!=null){
+		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
+	}else{
+		shopVO = (ShopVO) session.getAttribute("account");
+	}	
 %>
 <html>
 <head>
@@ -48,9 +54,19 @@
 
 				<div class="float-right">
 					<a href="#" class="text-white"><span class="d-md-inline-block"><img
-							class="icon" src="images/User-icon.png">會員登入</span></a> <a href="#"
-						class="text-white"><span class="d-md-inline-block"><img
-							class="icon" src="images/man-icon.png">店家登入</span></a>
+							class="icon" src="images/User-icon.png">會員登入</span></a>
+					<c:if test="${not empty account}">
+						<span class="mx-md-2 d-inline-block"></span>
+						<a href="update_shop_input.jsp" class="text-white"><span
+							class="mr-2 text-white icon-instagram"></span> <span
+							class="d-none d-md-inline-block">${account.getShopname()}</span></a>
+					</c:if>
+					<c:if test="${empty account}">
+						<span class="mx-md-2 d-inline-block"></span>
+						<a href="login.jsp" class="text-white"><span
+							class="mr-2 text-white icon-instagram"></span> <span
+							class="d-none d-md-inline-block">店家登入</span></a>
+					</c:if>
 				</div>
 
 			</div>
@@ -95,7 +111,7 @@
 						<li><a href="#mall" class="nav-link">商城</a></li>
 						<li><a href="#shop" class="nav-link">市集</a></li>
 						<li><a href="#play" class="nav-link">揪團區</a></li>
-						<li><a href="#store" class="nav-link">店家列表</a></li>
+						<li><a href="listAllShop.jsp" class="nav-link">店家列表</a></li>
 						<li><a href="#forum" class="nav-link">討論區</a></li>
 					</ul>
 				</nav>
@@ -137,8 +153,8 @@ tr:nth-child(odd) {
 }
 
 img {
-	width:300px;
-	height:200px;
+	width: 300px;
+	height: 200px;
 }
 </style>
 </head>
@@ -146,8 +162,7 @@ img {
 
 	<table>
 		<h4>
-			<a href="select_page.jsp"><img src="images/add-icon.png"
-				class="icon">回首頁</a>
+			<a href="index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
 		</h4>
 	</table>
 
@@ -163,7 +178,8 @@ img {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="shop.do" name="form1" enctype="multipart/form-data">
+	<FORM METHOD="post" ACTION="shop.do" name="form1"
+		enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>店家編號:</td>
@@ -202,7 +218,10 @@ img {
 			<tr>
 				<td>店家圖片:</td>
 				<td><input type="file" id="myFile" name="shopimg">
-					<div type="file" id="preview"><img style="width:300px;height:200px" src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></div></td>
+					<div type="file" id="preview">
+						<img style="width: 300px; height: 200px"
+							src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" />
+					</div></td>
 			</tr>
 			<input type="hidden" name="status" size="45"
 				value="<%=shopVO.getStatus()%>" />

@@ -1,18 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.shop.model.*"%>
-
-<%
-	ShopVO shopVO = null;
-	if(request.getAttribute("shopVO")!=null){
-		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
-	}else{
-		shopVO = (ShopVO) session.getAttribute("account");
-	}	
-%>
-
+<!DOCTYPE html>
+<html>
 <!doctype html>
 <html lang="en">
 <head>
+<link rel='stylesheet'
+	href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="../../css/loginStyle.css">
 <title>Unearth &mdash; Website Template by Colorlib</title>
 <meta charset="utf-8">
 <meta name="viewport"
@@ -73,20 +71,8 @@
 
 						<a href="#" class="text-white"><span
 							class="mr-2 text-white icon-twitter"></span> <span
-							class="d-none d-md-inline-block">會員登入</span></a>
-						<c:if test="${not empty account}">
-							<span class="mx-md-2 d-inline-block"></span>
-							<a href="update_shop_input.jsp" class="text-white"><span
-								class="mr-2 text-white icon-instagram"></span> <span
-								class="d-none d-md-inline-block">${account.getShopname()}</span></a>
-						</c:if>
-						<c:if test="${empty account}">
-							<span class="mx-md-2 d-inline-block"></span>
-							<a href="login.jsp" class="text-white"><span
-								class="mr-2 text-white icon-instagram"></span> <span
-								class="d-none d-md-inline-block">店家登入</span></a>
-						</c:if>
-
+							class="d-none d-md-inline-block">會員登入</span></a> <span
+							class="mx-md-2 d-inline-block"></span>
 					</div>
 
 				</div>
@@ -155,7 +141,7 @@
 
 	</header>
 
-	<title>店家</title>
+	<title>店家登入</title>
 	<style>
 table {
 	margin-top: 10px;
@@ -192,27 +178,36 @@ h4 {
 <h4 style="margin-left: 20px;">
 	<a href="index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
 </h4>
-<jsp:include page="select_page.jsp" flush="true">
-	<jsp:param name="" value="" />
-</jsp:include>
-<table>
-	<tr>
-		<th>店家名稱</th>
-		<th>位置</th>
-		<th>場地</th>
-		<th>電話</th>
-		<th>店家圖片</th>
-	</tr>
-	<tr>
-		<td><%=shopVO.getShopname()%></td>
-		<td><%=shopVO.getShoploc()%></td>
-		<td><%=shopVO.getShopcy()%></td>
-		<td><%=shopVO.getShopphone()%></td>
-		<td><img style="width: 300px; height: 200px"
-			src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></td>
-	</tr>
+<body>
 
-</table>
+	<form method="post" action="shop.do">
+		<div class="login-form" style="margin-top: 40px;">
+			<h1>店家登入</h1>
+			<div class="form-group ">
+				<input type="text" class="form-control" placeholder="帳號 "
+					id="UserName" name="account"> <i class="fa fa-user"></i>
+			</div>
+			<div class="form-group log-status">
+				<input type="password" class="form-control" placeholder="密碼"
+					id="Passwod" name="password"> <i class="fa fa-lock"></i>
+			</div>
+			<span style="font-size: 12px; color: #f00; float: left;"> 
+			<%-- 錯誤表列 --%> 
+			<c:if test="${not empty errorMsgs}">
+						<c:forEach var="message" items="${errorMsgs}">
+							${message}
+						</c:forEach>
+			</c:if>
+			</span>
+			 <a class="link" href="addShop.jsp">註冊</a> <input type="submit"
+				class="log-btn" value="會員登入"> <input type="hidden"
+				name="action" value="login">
+			<!-- 			</button> -->
+		</div>
+	</form>
 
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<!-- 		<script src="../../js/script.js"></script> -->
 </body>
 </html>
