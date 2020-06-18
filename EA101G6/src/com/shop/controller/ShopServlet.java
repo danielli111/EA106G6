@@ -76,14 +76,25 @@ public class ShopServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			ShopService shopSvc = new ShopService();
+			String shopno = null;
+			ShopVO shopVO = null;
+			shopVO = (ShopVO) session.getAttribute("account");
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				String shopno = req.getParameter("shopno");
+				if(req.getParameter("shopno") == null) {
+					shopno = shopVO.getShopno();					
+				}
+				else{
+					shopno = req.getParameter("shopno");
+				}
+				
+				
 
 				/*************************** 2.開始查詢資料 ****************************************/
-				ShopService shopSvc = new ShopService();
-				ShopVO shopVO = shopSvc.getOneShop(shopno);
+//				ShopService shopSvc = new ShopService();
+				shopVO = shopSvc.getOneShop(shopno);
+				
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("shopVO", shopVO); // 資料庫取出的shopVO物件,存入req
@@ -169,26 +180,31 @@ public class ShopServlet extends HttpServlet {
 					shopphone = 912345678;
 					errorMsgs.add("電話請填數字");
 				}
-				ShopVO vo = (ShopVO) session.getAttribute(shopno);
 				byte[] shopimg = null;
 
 				Part part;
 				part = req.getPart("shopimg");
 
 				InputStream in = null;
+
 				try {
-					in = part.getInputStream();
-					if (in.available() != 0) {
-						shopimg = new byte[in.available()];				
-					}else {
-						shopimg = vo.getShopimg();
-					}
-					in.read(shopimg);
-					
-					
-				} catch (IOException e) {
+					 if(part.getSize() == 0) {			            	
+			     		ShopService shopSvc = new ShopService();
+		         		ShopVO shopVo=shopSvc.getOneShop(shopno);
+		         		shopimg = shopVo.getShopimg(); 
+		         		in = part.getInputStream();
+		         		in.read(shopimg);
+					 }else{
+		            	in = part.getInputStream();
+		            	shopimg = new byte[in.available()];
+		          		in.read(shopimg);
+			    	  } 
+				}catch (IOException e) {
 					errorMsgs.add("上傳失敗");
-				} finally {
+					in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+					shopimg = new byte[in.available()];
+	          		in.read(shopimg);
+				}finally {
 					in.close();
 				}
 
@@ -205,11 +221,10 @@ public class ShopServlet extends HttpServlet {
 				shopVO.setShopimg(shopimg);
 				shopVO.setStatus(status);
 
-				session.removeAttribute(shopno);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("shopVO", shopVO); // 含有輸入格式錯誤的shopVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/update_shop_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("update_shop_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -220,16 +235,15 @@ public class ShopServlet extends HttpServlet {
 						status);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				session.setAttribute("account", shopVO);
 				req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的shopVO物件,存入req
-				String url = "/font-end/shop/listOneShop.jsp";
+				String url = "listOneShop.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneshop.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/update_shop_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("update_shop_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -335,7 +349,7 @@ public class ShopServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/addShop.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("addShop.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -356,15 +370,16 @@ public class ShopServlet extends HttpServlet {
 			shopVO = shopSvc.compare(account, password);
 			if (shopVO == null) {
 				errorMsgs.add("錯了啦");
-			}
+			}			
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("account", shopVO); // 含有輸入格式錯誤的shopVO物件,也存入req
-				RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/login.jsp");
+				req.setAttribute("shopVO", shopVO); // 含有輸入格式錯誤的shopVO物件,也存入req
+				RequestDispatcher failureView = req.getRequestDispatcher("login.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
+			shopVO = shopSvc.getOneShop(shopVO.getShopno());
 			session.setAttribute("account", shopVO);
-			RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/index.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("index.jsp");
 			failureView.forward(req, res);
 		}
 

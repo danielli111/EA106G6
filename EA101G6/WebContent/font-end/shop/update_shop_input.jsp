@@ -3,13 +3,12 @@
 <%@ page import="com.shop.model.*"%>
 
 <%
-// 	ShopService shopSvc = new ShopService();
 	ShopVO shopVO = null;
-	if(request.getAttribute("shopVO")!=null){
-		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
-	}else{
+	if(request.getParameter("shopno") == null){		
 		shopVO = (ShopVO) session.getAttribute("account");
-	}	
+	}else{
+		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
+	}
 %>
 <html>
 <head>
@@ -219,12 +218,10 @@ img {
 				<td>店家圖片:</td>
 				<td><input type="file" id="myFile" name="shopimg">
 					<div type="file" id="preview">
-						<img style="width: 300px; height: 200px"
-							src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" />
+						<img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" />
 					</div></td>
 			</tr>
-			<input type="hidden" name="status" size="45"
-				value="<%=shopVO.getStatus()%>" />
+			<input type="hidden" name="status" value="<%=shopVO.getStatus()%>" />
 
 
 
@@ -254,6 +251,7 @@ img {
 						console.log(result);
 						var img = document.createElement('img');
 						img.src = result;
+						preview.innerHTML="";
 						preview.append(img);
 					});
 					reader.readAsDataURL(file);

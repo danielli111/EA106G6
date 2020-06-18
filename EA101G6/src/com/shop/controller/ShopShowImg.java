@@ -1,6 +1,7 @@
 package com.shop.controller;
 
-import java.io.IOException;
+import java.io.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
@@ -22,26 +23,24 @@ public class ShopShowImg extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ServletOutputStream out=res.getOutputStream();
-		
+			
+			ServletOutputStream out=res.getOutputStream();	
             res.setContentType("image/jpeg");
-            String shopno=req.getParameter("shopno");
-            String account=req.getParameter("shopact");
-            HttpSession session = req.getSession();
-            ShopService shopSvc = new ShopService();
-            ShopVO shopVo=null;
-            /*用session判斷是否從update進來*/
-            if(session.getAttribute(shopno)!=null) {
-            	shopVo=(ShopVO)session.getAttribute(shopno);
-            }else if(session.getAttribute(account)!=null) {
-            	shopVo=(ShopVO)session.getAttribute(account);
-            }else{
-            	shopVo=shopSvc.getOneShop(shopno);
-            	session.setAttribute(shopno,shopVo);
-            }
-            out.write(shopVo.getShopimg());
             
-		
+         
+            try {
+            	String shopno=req.getParameter("shopno");
+            	ShopService shopSvc = new ShopService();
+            	ShopVO shopVo = shopSvc.getOneShop(shopno);
+                byte[] buf = shopVo.getShopimg();
+                out.write(buf);            
+            }catch(Exception e){
+            	ShopService shopSvc = new ShopService();
+            	HttpSession session = req.getSession();
+            	ShopVO shopVO = (ShopVO) session.getAttribute("account");
+            	byte[] b = shopVO.getShopimg();
+            	out.write(b);
+            }		
 	}
 
 }

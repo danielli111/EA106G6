@@ -226,6 +226,7 @@ img {
 						console.log(result);
 						var img = document.createElement('img');
 						img.src = result;
+						preview.innerHTML="";
 						preview.append(img);
 					});
 					reader.readAsDataURL(file);

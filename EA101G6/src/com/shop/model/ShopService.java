@@ -46,8 +46,13 @@ public class ShopService {
 		return shopVO;
 	}
 	
+	
 	public ShopVO getOneShop(String Shopno) {
 		return dao.findByPrimaryKey(Shopno);
+	}
+	
+	public List<ShopVO> getAllowedShop() {
+		return dao.getAllowedShop();
 	}
 	
 	public List<ShopVO> getAll() {

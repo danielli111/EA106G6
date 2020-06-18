@@ -1,13 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shop.model.*"%>
 
 <%
 	ShopVO shopVO = null;
-	if(request.getAttribute("shopVO")!=null){
-		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
-	}else{
+	if(request.getParameter("shopno") == null){		
 		shopVO = (ShopVO) session.getAttribute("account");
-	}	
+	}else{
+		shopVO = (ShopVO) request.getAttribute("shopVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)
+	}
 %>
 
 <!doctype html>
@@ -75,17 +76,17 @@
 							class="mr-2 text-white icon-twitter"></span> <span
 							class="d-none d-md-inline-block">會員登入</span></a>
 						<c:if test="${not empty account}">
-							<span class="mx-md-2 d-inline-block"></span>
-							<a href="update_shop_input.jsp" class="text-white"><span
-								class="mr-2 text-white icon-instagram"></span> <span
-								class="d-none d-md-inline-block">${account.getShopname()}</span></a>
+						<span class="mx-md-2 d-inline-block"></span>
+						<a href="update_shop_input.jsp" class="text-white"><span
+							class="mr-2 text-white icon-instagram"></span> <span
+							class="d-none d-md-inline-block">${account.getShopname()}</span></a>
 						</c:if>
 						<c:if test="${empty account}">
-							<span class="mx-md-2 d-inline-block"></span>
-							<a href="login.jsp" class="text-white"><span
-								class="mr-2 text-white icon-instagram"></span> <span
-								class="d-none d-md-inline-block">店家登入</span></a>
-						</c:if>
+						<span class="mx-md-2 d-inline-block"></span>
+						<a href="login.jsp" class="text-white"><span
+							class="mr-2 text-white icon-instagram"></span> <span
+							class="d-none d-md-inline-block">店家登入</span></a>
+					</c:if>
 
 					</div>
 
@@ -208,8 +209,7 @@ h4 {
 		<td><%=shopVO.getShoploc()%></td>
 		<td><%=shopVO.getShopcy()%></td>
 		<td><%=shopVO.getShopphone()%></td>
-		<td><img style="width: 300px; height: 200px"
-			src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></td>
+		<td><img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></td>
 	</tr>
 
 </table>

@@ -58,7 +58,7 @@ li {
 	</c:if>
 
 	<ul>
-		<li><a href='listAllShop.jsp' >List</a> all Shops. <br></li>
+		<li><a href='listAllShop.jsp' >List</a> all allowed Shops. <br></li>
 
 
 		<li>
@@ -75,7 +75,7 @@ li {
 		<li>
 			<FORM METHOD="post" ACTION="shop.do">
 				<b>選擇店家編號:</b> <select size="1" name="shopno">
-					<c:forEach var="shopVO" items="${shopSvc.all}">
+					<c:forEach var="shopVO" items="${shopSvc.getAllowedShop()}">
 						<option value="${shopVO.shopno}">${shopVO.shopno}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
@@ -86,7 +86,7 @@ li {
 		<li>
 			<FORM METHOD="post" ACTION="shop.do">
 				<b>選擇店家姓名:</b> <select size="1" name="shopno">
-					<c:forEach var="shopVO" items="${shopSvc.all}">
+					<c:forEach var="shopVO" items="${shopSvc.getAllowedShop()}">
 						<option value="${shopVO.shopno}">${shopVO.shopname}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">

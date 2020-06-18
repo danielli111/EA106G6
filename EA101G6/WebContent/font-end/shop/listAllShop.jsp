@@ -5,7 +5,7 @@
 
 <%
 	ShopService shopSvc = new ShopService();
-	List<ShopVO> list = shopSvc.getAll();
+	List<ShopVO> list = shopSvc.getAllowedShop();
 	pageContext.setAttribute("list", list);
 %>
 
@@ -223,7 +223,7 @@ h4 {
 			<th>場地</th>
 			<th>電話</th>
 			<th>店家圖片</th>
-			<th>修改</th>
+<!-- 			<th>修改</th> -->
 		</tr>
 		<c:forEach var="shopVO" items="${list}">
 			<tr>
@@ -231,15 +231,14 @@ h4 {
 				<td>${shopVO.shoploc}</td>
 				<td>${shopVO.shopcy}</td>
 				<td>0${shopVO.shopphone}</td>
-				<td><img style="width: 320px; height: 240px"
-					src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}"></td>
-				<td>
-					<FORM METHOD="post" ACTION="shop.do" style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> <input type="hidden"
-							name="shopno" value="${shopVO.shopno}"> <input
-							type="hidden" name="action" value="getOne_For_Update">
-					</FORM>
-				</td>
+				<td><img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}"></td>
+<!-- 				<td> -->
+<!-- 					<FORM METHOD="post" ACTION="shop.do" style="margin-bottom: 0px;"> -->
+<!-- 						<input type="submit" value="修改"> <input type="hidden" -->
+<%-- 							name="shopno" value="${shopVO.shopno}"> <input --%>
+<!-- 							type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 					</FORM> -->
+<!-- 				</td> -->
 			</tr>
 		</c:forEach>
 	</table>
