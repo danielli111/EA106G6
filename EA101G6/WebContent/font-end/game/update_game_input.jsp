@@ -1,13 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.game.model.*"%>
 
 <%
 // 	GameService gameSvc = new GameService();
-	GameVO gameVO = null;
-	gameVO = (GameVO) request.getAttribute("gameVO"); //gameServlet.java (Concroller) 存入req的gameVO物件 (包括幫忙取出的gameVO, 也包括輸入資料錯誤時的shopVO物件)
-
+	GameVO gameVO = (GameVO) request.getAttribute("gameVO"); //gameServlet.java (Concroller) 存入req的gameVO物件 (包括幫忙取出的gameVO, 也包括輸入資料錯誤時的shopVO物件)
 %>
 
 <!doctype html>
@@ -182,8 +179,8 @@ tr:nth-child(odd) {
 }
 
 img {
-	width: 50px;
-	height: 50px;
+	width: 300px;
+	height: 300px;
 }
 
 h4 {
@@ -195,9 +192,9 @@ h4 {
 	<a href="../shop/index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
 </h4>
 
-<jsp:include page="select_page.jsp" flush="true">
-	<jsp:param name="" value="" />
-</jsp:include>
+<%-- <jsp:include page="select_page.jsp" flush="true"> --%>
+<%-- 	<jsp:param name="" value="" /> --%>
+<%-- </jsp:include> --%>
 
 <table>
 	<tr style="background-color: #FFFFFF; border: 0px; font:;">
@@ -217,11 +214,6 @@ h4 {
 </c:if>
 <div>
 
-<table>
-		<h4>
-			<a href="../shop/index.jsp"><img src="images/add-icon.png" class="icon">回首頁</a>
-		</h4>
-	</table>
 
 	<h3>資料修改:</h3>
 
@@ -238,10 +230,7 @@ h4 {
 	<FORM METHOD="post" ACTION="game.do" name="form1"
 		enctype="multipart/form-data">
 		<table>
-			<tr>
-				<td>遊戲編號:</td>
-				<td><%=gameVO.getGmno()%></td>
-			</tr>
+			<input type="hidden" name="gmno" value="<%=gameVO.getGmno()%>" />
 			<tr>
 				<td>遊戲名稱:</td>
 				<td><input type="TEXT" name="gmname" size="45"
@@ -283,6 +272,7 @@ h4 {
 						console.log(result);
 						var img = document.createElement('img');
 						img.src = result;
+						preview.innerHTML='';
 						preview.append(img);
 					});
 					reader.readAsDataURL(file);

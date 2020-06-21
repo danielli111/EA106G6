@@ -42,6 +42,7 @@ public class GameJDBCDAO implements GameDAO_interface{
 			
 			pstmt.setString(1, gameVO.getGmname());
 			pstmt.setBytes(2, gameVO.getGmimg());
+			
 			pstmt.executeUpdate();
 			
 			
@@ -284,27 +285,28 @@ public class GameJDBCDAO implements GameDAO_interface{
 	public static void main(String[] args) {
 		GameJDBCDAO dao = new GameJDBCDAO();
 		GameService gameSvc = new GameService();
-		// ·s¼W
-//		GameVO gameVO1 = new GameVO();
-//		gameVO1.setGmname("ÕÙÕÙ");
-//		dao.insert(gameVO1);
-
-//		// ­×§ï
+		// ï¿½sï¿½W
+		GameVO gameVO1 = new GameVO();
+		gameVO1.setGmname("ï¿½ï¿½ï¿½ï¿½");
+		gameVO1.setGmimg(null);
+		gameSvc.addGame("å®‰å®‰å®‰", null);
+		System.out.println("fdfasd");
+//		// ï¿½×§ï¿½
 //		GameVO gameVO2 = new GameVO();
 //		gameVO2.setGmno("DG00001");
-//		gameVO2.setGmname("ªü¥Ë¶©");
+//		gameVO2.setGmname("ï¿½ï¿½ï¿½Ë¶ï¿½");
 //		dao.update(gameVO2);
 
 
-		// ¬d¸ß
-//		List<GameVO> list = dao.findByGmnames("¤H");
+		// ï¿½dï¿½ï¿½
+//		List<GameVO> list = dao.findByGmnames("ï¿½H");
 //		for (GameVO game : list) {
 //		System.out.print(game.getGmno() + ",");
 //		System.out.print(game.getGmname() + ",");
 //		System.out.println("---------------------");
 //		}
 
-		// ¬d¸ß
+		// ï¿½dï¿½ï¿½
 //		List<GameVO> list2 = dao.getAll();
 //		for (GameVO game : list2) {
 //			System.out.print(game.getGmno() + ",");
@@ -312,10 +314,10 @@ public class GameJDBCDAO implements GameDAO_interface{
 //			System.out.println("---------------------");
 //		}
 		
-		GameVO gameVo = gameSvc.getOneGame("DG00001");
-		System.out.print(gameVo.getGmno() + ",");
-		System.out.print(gameVo.getGmname() + ",");
-		System.out.println("---------------------");
+//		GameVO gameVo = gameSvc.getOneGame("DG00001");
+//		System.out.print(gameVo.getGmno() + ",");
+//		System.out.print(gameVo.getGmname() + ",");
+//		System.out.println("---------------------");
 		
 	}
 

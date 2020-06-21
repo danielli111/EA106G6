@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shop.model.*"%>
 
@@ -60,9 +59,9 @@ h4 {
 		<td><%=shopVO.getShopname()%></td>
 		<td><%=shopVO.getShoploc()%></td>
 		<td><%=shopVO.getShopcy()%></td>
-		<td><%=shopVO.getShopphone()%></td>
-		<td><%=shopVO.getStatus()%></td>
+		<td><%=shopVO.getShopphone()%></td>	
 		<td><img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" /></td>
+		<td>${(shopVO.status==0)? '未審核':''}${(shopVO.status==1)? '審核通過':''}${(shopVO.status==2)? '停權':''}</td>
 	</tr>
 
 </table>

@@ -1,7 +1,5 @@
 package com.shopbk.model;
 
-import java.sql.Timestamp;
-
 public class ShopbkVO implements java.io.Serializable{
 	private String shopbkno;
 	private String shopno;

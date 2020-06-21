@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shop.model.*"%>
 
@@ -56,28 +55,35 @@ img {
 		<table>
 			<tr>
 				<td>店家編號:</td>
-				<td><%=shopVO.getShopno()%></td>
+				<td><input type="hidden" id="myFile" name="shopno" value="${shopVO.shopno}"><%=shopVO.getShopno()%></td>
 			</tr>
+			
+			<input type="hidden" name="shopact" size="45"
+					value="<%=shopVO.getShopact()%>" />
+					
+			<input type="hidden" name="shoppw" size="45"
+					value="<%=shopVO.getShoppw()%>" />
+
 			<tr>
 				<td>店家名稱:</td>
-				<td><%=shopVO.getShopname()%></td>
+				<td><input type="hidden" id="myFile" name="shopname" value="${shopVO.shopname}"><%=shopVO.getShopname()%></td>
 			</tr>
 			<tr>
 				<td>位置:</td>
-				<td><%=shopVO.getShoploc()%></td>
+				<td><input type="hidden" id="myFile" name="shoploc" value="${shopVO.shoploc}"><%=shopVO.getShoploc()%></td>
 			</tr>
 			<tr>
 				<td>場地:</td>
-				<td><%=shopVO.getShopcy()%></td>
+				<td><input type="hidden" id="myFile" name="shopcy" value="${shopVO.shopcy}"><%=shopVO.getShopcy()%></td>
 			</tr>
 			<tr>
 				<td>電話:</td>
-				<td><%=shopVO.getShopphone()%></td>
+				<td><input type="hidden" id="myFile" name="shopphone" value="${shopVO.shopphone}"><%=shopVO.getShopphone()%></td>
 			</tr>
 			<tr>
 				<td>店家圖片:</td>
-				<td>
-					<div type="file">
+				<td><input type="hidden" id="myFile" name="shopimg">
+					<div type="hidden" name="shopimg" value="${shopVO.shopimg}">
 						<img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}" />
 					</div>
 				</td>

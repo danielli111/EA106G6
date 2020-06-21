@@ -1,7 +1,5 @@
 package com.shopbk.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.shopbk.model.ShopbkVO;
@@ -13,11 +11,10 @@ public class ShopbkService {
 	public ShopbkService() {
 		dao = new ShopbkJDBCDAO();
 	}
-	public ShopbkVO addShopbk(String shopbkno, String shopno, Integer ofdtable, String shoppds, String shoppde, Integer payinfohr, Integer payinfoday) {
+	public ShopbkVO addShopbk(String shopno, Integer ofdtable, String shoppds, String shoppde, Integer payinfohr, Integer payinfoday) {
 		
 		ShopbkVO shopbkVO = new ShopbkVO();
 		
-		shopbkVO.setShopbkno(shopbkno);
 		shopbkVO.setShopno(shopno);
 		shopbkVO.setOfdtable(ofdtable);
 		shopbkVO.setShoppds(shoppds);
@@ -45,8 +42,14 @@ public class ShopbkService {
 		return shopbkVO;
 		
 	}
-	public List<ShopbkVO> getOneShop(String Shopbkno, String shoppd) {
-		return dao.findByPrimaryKey(Shopbkno, shoppd);
+	public ShopbkVO getOneShopbk(String Shopbkno) {
+		return dao.findByPrimaryKey(Shopbkno);
+	}
+	public List<ShopbkVO> getShopbkByTime(String Shopbkno, String shoppd) {
+		return dao.findByShoppd(Shopbkno, shoppd);
+	}
+	public List<ShopbkVO> getShopbkByShop(String Shopno) {
+		return dao.findByShop(Shopno);
 	}
 	public List<ShopbkVO> getAll() {
 		return dao.getAll();

@@ -29,4 +29,14 @@
 		<url-pattern>/font-end/game/game.do</url-pattern>
 		<url-pattern>/back-end/game/game.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ShopbkServlet</servlet-name>
+		<servlet-class>com.shopbk.controller.ShopbkServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShopbkServlet</servlet-name>
+		<url-pattern>/font-end/shopbk/shopbk.do</url-pattern>
+		<url-pattern>/back-end/shopbk/shopbk.do</url-pattern>
+	</servlet-mapping>
 </web-app>

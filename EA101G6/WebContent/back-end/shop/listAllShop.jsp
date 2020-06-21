@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
@@ -79,7 +78,7 @@ h4 {
 				<td>${shopVO.shopcy}</td>
 				<td>0${shopVO.shopphone}</td>
 				<td><img src="<%=request.getContextPath()%>/ShopShowImg?shopno=${shopVO.shopno}"></td>
-				<td>${shopVO.status}</td>
+				<td>${(shopVO.status==0)? '未審核':''}${(shopVO.status==1)? '審核通過':''}${(shopVO.status==2)? '停權':''}</td>
 				<td>
 					<FORM METHOD="post" ACTION="shop.do" style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> <input type="hidden"

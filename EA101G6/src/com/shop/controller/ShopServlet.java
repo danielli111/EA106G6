@@ -22,7 +22,7 @@ public class ShopServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Display".equals(action)) { // ï¿½Ó¦ï¿½select_page.jspï¿½ï¿½ï¿½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -30,47 +30,47 @@ public class ShopServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************/
 				String shopno = req.getParameter("shopno");
 				String shopnoReg = "[D][S]\\d{5}";
 				if (shopno == null || (shopno.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J­û¤u½s¸¹");
+					errorMsgs.add("åº—å®¶ç·¨è™Ÿä¸èƒ½ç‚ºç©º");
 				} else if (!shopno.trim().matches(shopnoReg)) {
-					errorMsgs.add("­û¤u½s¸¹¤£²Å¦X®æ¦¡");
+					errorMsgs.add("åº—å®¶ç·¨è™Ÿæ ¼å¼éŒ¯èª¤");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½ *****************************************/
 				ShopService shopSvc = new ShopService();
 				ShopVO shopVO = shopSvc.getOneShop(shopno);
 				if (shopVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("shopVO", shopVO); // ¸ê®Æ®w¨ú¥XªºshopVOª«¥ó,¦s¤Jreq
+				/*************************** 3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) *************/
+				req.setAttribute("shopVO", shopVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
 				String url = "listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneshop.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ listOneshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllshop.jspªº½Ğ¨D
+		if ("getOne_For_Update".equals(action)) { // ï¿½Ó¦ï¿½listAllshop.jspï¿½ï¿½ï¿½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -81,7 +81,7 @@ public class ShopServlet extends HttpServlet {
 			ShopVO shopVO = null;
 			shopVO = (ShopVO) session.getAttribute("account");
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¨Dï¿½Ñ¼ï¿½ ****************************************/
 				if(req.getParameter("shopno") == null) {
 					shopno = shopVO.getShopno();					
 				}
@@ -91,26 +91,26 @@ public class ShopServlet extends HttpServlet {
 				
 				
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½ ****************************************/
 //				ShopService shopSvc = new ShopService();
 				shopVO = shopSvc.getOneShop(shopno);
 				
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
-				req.setAttribute("shopVO", shopVO); // ¸ê®Æ®w¨ú¥XªºshopVOª«¥ó,¦s¤Jreq
+				/*************************** 3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) ************/
+				req.setAttribute("shopVO", shopVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
 				String url = "update_shop_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_shop_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ update_shop_input.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è¦ä¿®æ”¹çš„è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("update".equals(action)) { // ¨Ó¦Ûupdate_shop_input.jspªº½Ğ¨D
+		if ("update".equals(action)) { // ï¿½Ó¦ï¿½update_shop_input.jspï¿½ï¿½ï¿½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -118,59 +118,59 @@ public class ShopServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************/
 				String shopno = req.getParameter("shopno");
 				String shopnoReg = "[D][S]\\d{5}";
 				if (shopno == null || (shopno.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤J­û¤u½s¸¹");
+					errorMsgs.add("åº—å®¶ç·¨è™Ÿ:è«‹å‹¿ç©ºç™½");
 				} else if (!shopno.trim().matches(shopnoReg)) {
-					errorMsgs.add("­û¤u½s¸¹¤£²Å¦X®æ¦¡");
+					errorMsgs.add("åº—å®¶ç·¨è™Ÿæ ¼å¼éŒ¯èª¤");
 				}
 
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("select_page.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
 				String shopname = req.getParameter("shopname");
 				String shopnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,10}$";
 				if (shopname == null || shopname.trim().length() == 0) {
-					errorMsgs.add("©±®a¦WºÙ: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopname.trim().matches(shopnameReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a¦WºÙ: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b2¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶åç¨±è«‹å‹¿ç©ºç™½");
+				} else if (!shopname.trim().matches(shopnameReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶");
 				}
 
 				String shopact = req.getParameter("shopact");
 				String shopactReg = "^[(a-zA-Z0-9)]{3,10}$";
 				if (shopact == null || shopact.trim().length() == 0) {
-					errorMsgs.add("©±®a±b¸¹: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopact.trim().matches(shopactReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±b¸¹: ¥u¯à¬O¤j¤p¼g­^¤å¦r¥À©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶å¸³è™Ÿè«‹å‹¿ç©ºç™½");
+				} else if (!shopact.trim().matches(shopactReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶å¸³è™Ÿæ ¼æ˜¯éŒ¯èª¤");
 				}
 
 				String shoppw = req.getParameter("shoppw");
 				String shoppwReg = "^[(a-zA-Z0-9)]{3,10}$";
 				if (shoppw == null || shoppw.trim().length() == 0) {
-					errorMsgs.add("©±®a±K½X: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shoppw.trim().matches(shoppwReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±K½X: ¥u¯à¬O¤j¤p¼g­^¤å¦r¥À©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶å¯†ç¢¼è«‹å‹¿ç©ºç™½");
+				} else if (!shoppw.trim().matches(shoppwReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶å¯†ç¢¼æ ¼å¼éŒ¯èª¤");
 				}
 
 				String shoploc = req.getParameter("shoploc");
 				String shoplocReg = "^[(\\u4e00-\\u9fa5)]{3,9}$";
 				if (shoploc == null || shoploc.trim().length() == 0) {
-					errorMsgs.add("©±®a¦ì¸m: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shoploc.trim().matches(shoplocReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a¦ì¸m: ¥u¯à¬O¤¤¤å©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì9¤§¶¡");
+					errorMsgs.add("åº—å®¶ä½ç½®è«‹å‹¿ç©ºç™½");
+				} else if (!shoploc.trim().matches(shoplocReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶ä½ç½®æ ¼å¼éŒ¯èª¤");
 				}
 
 				String shopcy = req.getParameter("shopcy");
 				String shopcyReg = "^[(\\u4e00-\\u9fa5)(0-9\\*)]{3,9}$";
 				if (shopcy == null || shopcy.trim().length() == 0) {
-					errorMsgs.add("©±®a³õ¦a: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopcy.trim().matches(shopcyReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a³õ¦a: ¥u¯à¬O¤¤¤å¡B¼Æ¦r©Î* , ¥Bªø«×¥²»İ¦b3¨ì9¤§¶¡");
+					errorMsgs.add("å ´åœ°å¤§å°è«‹å‹¿ç©ºç™½");
+				} else if (!shopcy.trim().matches(shopcyReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("å ´åœ°æ ¼å¼éŒ¯èª¤");
 				}
 				Integer shopphone = null;
 				try {
@@ -178,7 +178,7 @@ public class ShopServlet extends HttpServlet {
 
 				} catch (NumberFormatException e) {
 					shopphone = 912345678;
-					errorMsgs.add("¹q¸Ü½Ğ¶ñ¼Æ¦r");
+					errorMsgs.add("é›»è©±è™Ÿç¢¼æœ‰èª¤");
 				}
 				byte[] shopimg = null;
 
@@ -190,7 +190,7 @@ public class ShopServlet extends HttpServlet {
 				try {
 					 if(part.getSize() == 0) {			            	
 			     		ShopService shopSvc = new ShopService();
-		         		ShopVO shopVo=shopSvc.getOneShop(shopno);
+		         		ShopVO shopVo = shopSvc.getOneShop(shopno);
 		         		shopimg = shopVo.getShopimg(); 
 		         		in = part.getInputStream();
 		         		in.read(shopimg);
@@ -200,7 +200,7 @@ public class ShopServlet extends HttpServlet {
 		          		in.read(shopimg);
 			    	  } 
 				}catch (IOException e) {
-					errorMsgs.add("¤W¶Ç¥¢±Ñ");
+					errorMsgs.add("ä¸Šå‚³å¤±æ•—");
 					in = getServletContext().getResourceAsStream("/NoData/null.jpg");
 					shopimg = new byte[in.available()];
 	          		in.read(shopimg);
@@ -223,78 +223,78 @@ public class ShopServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("shopVO", shopVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºshopVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("shopVO", shopVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
 					RequestDispatcher failureView = req.getRequestDispatcher("update_shop_input.jsp");
 					failureView.forward(req, res);
-					return; // µ{¦¡¤¤Â_
+					return; // ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½×§ï¿½ï¿½ï¿½ *****************************************/
 				ShopService shopSvc = new ShopService();
 				shopVO = shopSvc.updateShop(shopno, shopact, shoppw, shopname, shoploc, shopcy, shopphone, shopimg,
 						status);
 
-				/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("shopVO", shopVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºshopVOª«¥ó,¦s¤Jreq
+				/*************************** 3.ï¿½×§ï§¹ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) *************/
+				req.setAttribute("shopVO", shopVO); // ï¿½ï¿½Æ®wupdateï¿½ï¿½ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
 				String url = "listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneshop.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½×§ï¦¨ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½listOneshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:" + e.getMessage());
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("update_shop_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("insert".equals(action)) { // ¨Ó¦Ûaddshop.jspªº½Ğ¨D
+		if ("insert".equals(action)) { // ï¿½Ó¦ï¿½addshop.jspï¿½ï¿½ï¿½Ğ¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/*********************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z *************************/
+				/*********************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************/
 
 				String shopname = req.getParameter("shopname");
 				String shopnameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,10}$";
 				if (shopname == null || shopname.trim().length() == 0) {
-					errorMsgs.add("©±®a¦WºÙ: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopname.trim().matches(shopnameReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a¦WºÙ: ¥u¯à¬O¤¤¡B­^¤å¦r¥À¡B¼Æ¦r©M_ , ¥Bªø«×¥²»İ¦b2¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶åç¨±è«‹å‹¿ç©ºç™½");
+				} else if (!shopname.trim().matches(shopnameReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶åç¨±æ ¼å¼éŒ¯èª¤");
 				}
 
 				String shopact = req.getParameter("shopact");
 				String shopactReg = "^[(a-zA-Z0-9)]{3,10}$";
 				if (shopact == null || shopact.trim().length() == 0) {
-					errorMsgs.add("©±®a±b¸¹: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopact.trim().matches(shopactReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±b¸¹: ¥u¯à¬O¤j¤p¼g­^¤å¦r¥À©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶å¸³è™Ÿè«‹å‹¿ç©ºç™½");
+				} else if (!shopact.trim().matches(shopactReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶å¸³è™Ÿæ ¼å¼éŒ¯èª¤");
 				}
 
 				String shoppw = req.getParameter("shoppw");
 				String shoppwReg = "^[(a-zA-Z0-9)]{3,10}$";
 				if (shoppw == null || shoppw.trim().length() == 0) {
-					errorMsgs.add("©±®a±K½X: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shoppw.trim().matches(shoppwReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a±K½X: ¥u¯à¬O¤j¤p¼g­^¤å¦r¥À©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì10¤§¶¡");
+					errorMsgs.add("åº—å®¶å¯†ç¢¼è«‹å‹¿ç©ºç™½");
+				} else if (!shoppw.trim().matches(shoppwReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶å¯†ç¢¼æ ¼å¼éŒ¯èª¤");
 				}
 
 				String shoploc = req.getParameter("shoploc");
 				String shoplocReg = "^[(\\u4e00-\\u9fa5)]{3,9}$";
 				if (shoploc == null || shoploc.trim().length() == 0) {
-					errorMsgs.add("©±®a¦ì¸m: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shoploc.trim().matches(shoplocReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a¦ì¸m: ¥u¯à¬O¤¤¤å©Î¼Æ¦r , ¥Bªø«×¥²»İ¦b3¨ì9¤§¶¡");
+					errorMsgs.add("åº—å®¶ä½ç½®è«‹å‹¿ç©ºç™½");
+				} else if (!shoploc.trim().matches(shoplocReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("åº—å®¶å¯†ç¢¼æ ¼å¼éŒ¯èª¤");
 				}
 
 				String shopcy = req.getParameter("shopcy");
 				String shopcyReg = "^[(\\u4e00-\\u9fa5)(0-9\\*)]{3,9}$";
 				if (shopcy == null || shopcy.trim().length() == 0) {
-					errorMsgs.add("©±®a³õ¦a: ½Ğ¤ÅªÅ¥Õ");
-				} else if (!shopcy.trim().matches(shopcyReg)) { // ¥H¤U½m²ß¥¿«h(³W)ªí¥Ü¦¡(regular-expression)
-					errorMsgs.add("©±®a³õ¦a: ¥u¯à¬O¤¤¤å¡B¼Æ¦r©Î* , ¥Bªø«×¥²»İ¦b3¨ì9¤§¶¡");
+					errorMsgs.add("åº—å®¶å ´åœ°è«‹å‹¿ç©ºç™½");
+				} else if (!shopcy.trim().matches(shopcyReg)) { // ï¿½Hï¿½Uï¿½mï¿½ß¥ï¿½ï¿½h(ï¿½W)ï¿½ï¿½Ü¦ï¿½(regular-expression)
+					errorMsgs.add("å ´åœ°æ ¼å¼éŒ¯èª¤");
 				}
 				Integer shopphone = null;
 				try {
@@ -302,7 +302,7 @@ public class ShopServlet extends HttpServlet {
 
 				} catch (NumberFormatException e) {
 					shopphone = 912345678;
-					errorMsgs.add("¹q¸Ü½Ğ¶ñ¼Æ¦r");
+					errorMsgs.add("é›»è©±è™Ÿç¢¼æ ¼å¼éŒ¯èª¤");
 				}
 				
 				byte[] shopimg = null;
@@ -331,22 +331,22 @@ public class ShopServlet extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("shopVO", shopVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºshopVOª«¥ó,¤]¦s¤Jreq
+					req.setAttribute("shopVO", shopVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
 					RequestDispatcher failureView = req.getRequestDispatcher("addShop.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
-				/*************************** 2.¶}©l·s¼W¸ê®Æ ***************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½sï¿½Wï¿½ï¿½ï¿½ ***************************************/
 				ShopService shopSvc = new ShopService();
 				shopVO = shopSvc.addShop(shopact, shoppw, shopname, shoploc, shopcy, shopphone, shopimg, status);
 
-				/*************************** 3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
+				/*************************** 3.ï¿½sï¿½Wï¿½ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) ***********/
 				String url = "listAllShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllshop.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½sï¿½Wï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½listAllshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("addShop.jsp");
@@ -369,13 +369,13 @@ public class ShopServlet extends HttpServlet {
 			ShopService shopSvc = new ShopService();
 			shopVO = shopSvc.compare(account, password);
 			if (shopVO == null) {
-				errorMsgs.add("¿ù¤F°Õ");
+				errorMsgs.add("å¸³è™Ÿå¯†ç¢¼éŒ¯èª¤");
 			}			
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("shopVO", shopVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºshopVOª«¥ó,¤]¦s¤Jreq
+				req.setAttribute("shopVO", shopVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
 				RequestDispatcher failureView = req.getRequestDispatcher("login.jsp");
 				failureView.forward(req, res);
-				return; // µ{¦¡¤¤Â_
+				return; // ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 			}
 			shopVO = shopSvc.getOneShop(shopVO.getShopno());
 			session.setAttribute("account", shopVO);

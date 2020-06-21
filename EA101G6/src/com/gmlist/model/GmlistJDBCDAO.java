@@ -22,7 +22,7 @@ public class GmlistJDBCDAO implements GmlistDAO_interface{
 	private static final String DELETE = 
 		"DELETE FROM gmlist where gmno = ? AND shopno = ?";	
 	private static final String GET_GMLIST_BY_GAME =
-			"SELECT gmno,shopno FROM gmlist where gmno = ?";
+			"SELECT GM.GMNO, GM.SHOPNO, SHOPNAME, SHOPIMG, SHOPLOC, GMIMG, GMNAME FROM GMLIST GM  JOIN SHOP S ON GM.SHOPNO = S.SHOPNO JOIN GAME G ON GM.GMNO = G.GMNO WHERE GM.GMNO = ?";
 	private static final String GET_GMLIST_BY_SHOP =
 			"SELECT gmno,shopno FROM gmlist where shopno = ?";		
 			
@@ -235,29 +235,29 @@ public class GmlistJDBCDAO implements GmlistDAO_interface{
 	public static void main(String[] args) {
 		GmlistJDBCDAO dao = new GmlistJDBCDAO();
 		
-		// ·s¼W
+		// ï¿½sï¿½W
 //		GmlistVO gmlistVO1 = new GmlistVO();
 //		gmlistVO1.setGmno("DG00003");
 //		gmlistVO1.setShopno("DS00001");
 //		dao.insert(gmlistVO1);
 	
-		// §R°£
+		// ï¿½Rï¿½ï¿½
 		dao.delete("DG00001", "DS00001");	
 		
-		//¬d¸ß¦³­þ¨Ç©±®a¦³³o´Ú®à¹C
+		//ï¿½dï¿½ß¦ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½aï¿½ï¿½ï¿½oï¿½Ú®ï¿½C
 		List<GmlistVO> list = dao.findByGame("DG00001");
 		for (GmlistVO gmlist : list) {
 			System.out.print(gmlist.getGmno() + ",");
 			System.out.print(gmlist.getShopno());
 			System.out.println();
 		}
-		//¬d¸ß©±®a¦³¤°»ò®à¹C
-		List<GmlistVO> list2 = dao.findByShop("DS00001");
-		for (GmlistVO gmlist : list2) {
-			System.out.print(gmlist.getGmno() + ",");
-			System.out.print(gmlist.getShopno());
-			System.out.println();
-		}
+		//ï¿½dï¿½ß©ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½C
+//		List<GmlistVO> list2 = dao.findByShop("DS00001");
+//		for (GmlistVO gmlist : list2) {
+//			System.out.print(gmlist.getGmno() + ",");
+//			System.out.print(gmlist.getShopno());
+//			System.out.println();
+//		}
 		
 	}
 

@@ -11,10 +11,21 @@ public class GameService {
 	}
 	public GameVO addGame(String gmname, byte[] gmimg) {
 		GameVO gameVO = new GameVO();
+		
+		gameVO.setGmname(gmname);
+		gameVO.setGmimg(gmimg);
+		dao.insert(gameVO);
+		
 		return gameVO;
 	}
 	public GameVO updateGame(String gmno, String gmname, byte[] gmimg) {
 		GameVO gameVO = new GameVO();
+		
+		gameVO.setGmno(gmno);
+		gameVO.setGmname(gmname);
+		gameVO.setGmimg(gmimg);	
+		dao.update(gameVO);
+		
 		return gameVO;
 	}
 	public List<GameVO> getSomeGames(String gmname) {

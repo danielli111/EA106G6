@@ -1,6 +1,8 @@
 package com.game.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
@@ -21,22 +23,22 @@ public class GameShowImg extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ServletOutputStream out=res.getOutputStream();
-		
+			ServletOutputStream out=res.getOutputStream();
             res.setContentType("image/jpeg");
-            String gmno=req.getParameter("gmno");
-//            String account=req.getParameter("shopact");
-            HttpSession session = req.getSession();
-            GameService gameSvc = new GameService();
-            GameVO gameVo=null;
-            /*用session判斷是否從update進來*/
-            if(session.getAttribute(gmno)!=null) {
-            	gameVo=(GameVO)session.getAttribute(gmno);
-            }else{
-            	gameVo=gameSvc.getOneGame(gmno);
-            	session.setAttribute(gmno,gameVo);
-            }
-            out.write(gameVo.getGmimg());
+            
+            try {
+            	String gmno=req.getParameter("gmno");
+            	GameService gameSvc = new GameService();
+            	GameVO gameVo = gameSvc.getOneGame(gmno);
+                byte[] buf = gameVo.getGmimg();
+                out.write(buf);            
+            }catch(Exception e){
+            	InputStream in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+            	byte[] b = new byte[in.available()];
+            	in.read(b);
+            	out.write(b);
+            	in.close();
+            }	
             
 		
 	}

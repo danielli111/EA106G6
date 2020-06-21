@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.game.model.*"%>
 
 <%
-	GameVO gameVO = null;
-	gameVO = (GameVO) request.getAttribute("gameVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)	
+	GameVO gameVO = (GameVO) request.getAttribute("gameVO"); //shopServlet.java (Concroller) 存入req的shopVO物件 (包括幫忙取出的shopVO, 也包括輸入資料錯誤時的shopVO物件)	
 %>
 
 <!doctype html>
@@ -201,13 +200,20 @@ h4 {
 		<th>遊戲編號</th>
 		<th>遊戲名稱</th>
 		<th>遊戲圖片</th>
+		<th>修改</th>
 	</tr>
 	<tr>
 		<td><%=gameVO.getGmno()%></td>
 		<td><%=gameVO.getGmname()%></td>
-		<td><img src="<%=request.getContextPath()%>/GameShowImg?gameno=${gameVO.gmno}" /></td>
+		<td><img src="<%=request.getContextPath()%>/GameShowImg?gmno=${gameVO.gmno}" /></td>
+		<td>
+					<FORM METHOD="post" ACTION="game.do" style="margin-bottom: 0px;">
+						<input type="submit" value="修改"> <input type="hidden"
+							name="gmno" value="${gameVO.gmno}"> <input
+							type="hidden" name="action" value="getOne_For_Update">
+					</FORM>
+		</td>
 	</tr>
-
 </table>
 
 </body>

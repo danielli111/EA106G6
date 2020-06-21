@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=BIG5"
-    pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
+<title>搜尋</title>
 </head>
 <body>
 <style>
@@ -66,8 +65,8 @@ li {
 
 		<li>
 			<FORM METHOD="post" ACTION="game.do">
-				<b>輸入店家編號 (如DS00001):</b> <input type="text" name="gmno">
-				<input type="hidden" name="action" value="getOne_For_Display">
+				<b>輸入遊戲名稱關鍵字 (如狼人殺):</b> <input type="text" name="gmname">
+				<input type="hidden" name="action" value="getSome_For_Display">
 				<input type="submit" value="送出">
 			</FORM>
 		</li>
@@ -77,8 +76,8 @@ li {
 
 		<li>
 			<FORM METHOD="post" ACTION="game.do">
-				<b>選擇店家編號:</b> <select size="1" name="gmno">
-					<c:forEach var="gameVO" items="${shopSvc.all}">
+				<b>選擇遊戲編號:</b> <select size="1" name="gmno">
+					<c:forEach var="gameVO" items="${gameSvc.all}">
 						<option value="${gameVO.gmno}">${gameVO.gmno}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
@@ -88,9 +87,9 @@ li {
 
 		<li>
 			<FORM METHOD="post" ACTION="game.do">
-				<b>選擇店家姓名:</b> <select size="1" name="gmno">
+				<b>選擇遊戲名稱:</b> <select size="1" name="gmno">
 					<c:forEach var="gameVO" items="${gameSvc.all}">
-						<option value="${gameVO.gameno}">${gameVO.gmname}
+						<option value="${gameVO.gmno}">${gameVO.gmname}
 					</c:forEach>
 				</select> <input type="hidden" name="action" value="getOne_For_Display">
 				<input type="submit" value="送出">

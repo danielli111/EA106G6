@@ -23,7 +23,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 	private static final String GET_ONE_STMT = 
 		"SELECT SHOPNO,SHOPACT,SHOPPW,SHOPNAME,SHOPLOC,SHOPCY,SHOPPHONE,SHOPIMG,STATUS FROM SHOP WHERE SHOPNO = ?";
 	private static final String UPDATE = 
-		"UPDATE SHOP SET SHOPACT=?, SHOPPW=?, SHOPNAME=?, SHOPLOC=?, SHOPCY=?, SHOPPHONE=? ,SHOPIMG=? WHERE SHOPNO = ?";
+		"UPDATE SHOP SET SHOPACT=?, SHOPPW=?, SHOPNAME=?, SHOPLOC=?, SHOPCY=?, SHOPPHONE=? ,SHOPIMG=?, STATUS=? WHERE SHOPNO = ?";
 	private static final String LOGIN = 
 		"SELECT SHOPNO FROM SHOP WHERE SHOPACT=? AND SHOPPW=?";
 	private static final String UPDATE_BY_MANAGER = 
@@ -98,7 +98,8 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 			pstmt.setString(5, shopVO.getShopcy());
 			pstmt.setInt(6, shopVO.getShopphone());
 			pstmt.setBytes(7, shopVO.getShopimg());
-			pstmt.setString(8, shopVO.getShopno());
+			pstmt.setInt(8, shopVO.getStatus());
+			pstmt.setString(9, shopVO.getShopno());
 
 			pstmt.executeUpdate();
 
@@ -147,7 +148,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// shopVo ¤]ºÙ¬° Domain objects
+				// shopVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				shopVO = new ShopVO();
 				shopVO.setShopno(rs.getString("shopno"));
 				shopVO.setShopact(rs.getString("shopact"));
@@ -212,7 +213,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// shopVO ¤]ºÙ¬° Domain objects
+				// shopVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				shopVO = new ShopVO();
 				shopVO.setShopno(rs.getString("shopno"));
 				shopVO.setShopact(rs.getString("shopact"));
@@ -278,7 +279,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// shopVO ¤]ºÙ¬° Domain objects
+				// shopVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				shopVO = new ShopVO();
 				shopVO.setShopno(rs.getString("shopno"));
 				shopVO.setShopact(rs.getString("shopact"));
@@ -346,7 +347,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				// shopVo ¤]ºÙ¬° Domain objects
+				// shopVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				shopVO = new ShopVO();
 				shopVO.setShopno(rs.getString("shopno"));
 			}
@@ -386,57 +387,57 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 		return shopVO;
 	}
 	
-	@Override
-	public void updateStatus(ShopVO shopVO) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
-
-			pstmt.setInt(1, shopVO.getStatus());
-			pstmt.setString(2, shopVO.getShopno());
-
-			pstmt.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-	}
+//	@Override
+//	public void updateStatus(ShopVO shopVO) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+//			pstmt = con.prepareStatement(UPDATE);
+//
+//			pstmt.setInt(1, shopVO.getStatus());
+//			pstmt.setString(2, shopVO.getShopno());
+//
+//			pstmt.executeUpdate();
+//
+//			// Handle any driver errors
+//		} catch (ClassNotFoundException e) {
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//			// Handle any SQL errors
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//			// Clean up JDBC resources
+//		} finally {
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//	}
 	
-	// ¨Ï¥ÎInputStream¸ê®Æ¬y¤è¦¡
+	// ï¿½Ï¥ï¿½InputStreamï¿½ï¿½Æ¬yï¿½è¦¡
 		public static InputStream getPictureStream(String path) throws IOException {
 			File file = new File(path);
 			FileInputStream fis = new FileInputStream(file);
 			return fis;
 		}
 
-		// ¨Ï¥Îbyte[]¤è¦¡
+		// ï¿½Ï¥ï¿½byte[]ï¿½è¦¡
 		public static byte[] getPictureByteArray(String path) throws IOException {
 			File file = new File(path);
 			FileInputStream fis = new FileInputStream(file);
@@ -459,13 +460,13 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 		ShopJDBCDAO dao = new ShopJDBCDAO();
 		ShopService shopSvc = new ShopService();
 //		List<ShopVO> list = shopSvc.getAll();
-		// ·s¼W
+		// ï¿½sï¿½W
 //		ShopVO shopVO1 = new ShopVO();
 //		shopVO1.setShopact("apple");
 //		shopVO1.setShoppw("z1234");
-//		shopVO1.setShopname("¤j½Ã");
-//		shopVO1.setShoploc("®ç¶é¥«¤¤Ãc°Ï¤¤¥¿¸ô");
-//		shopVO1.setShopcy("¤»¤H®à*10");
+//		shopVO1.setShopname("ï¿½jï¿½ï¿½");
+//		shopVO1.setShoploc("ï¿½ï¿½é¥«ï¿½ï¿½ï¿½cï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½");
+//		shopVO1.setShopcy("ï¿½ï¿½ï¿½Hï¿½ï¿½*10");
 //		shopVO1.setShopphone(933103579);
 //		try {
 //			byte[] pic = getPictureByteArray("WebContent/font-end/shop/images/game.png");
@@ -476,20 +477,20 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 //		shopVO1.setStatus(1);
 //		dao.insert(shopVO1);
 //
-//		// ­×§ï
+//		// ï¿½×§ï¿½
 //		ShopVO shopVO2 = new ShopVO();
 //		shopVO2.setShopno("DS00001");
 //		shopVO2.setShopact("apple");
 //		shopVO2.setShoppw("z1234");
-//		shopVO2.setShopname("¤j½Ã");
-//		shopVO2.setShoploc("®ç¶é¥«¤¤Ãc°Ï¤¤¥¿¸ô");
-//		shopVO2.setShopcy("¤»¤H®à*10");
+//		shopVO2.setShopname("ï¿½jï¿½ï¿½");
+//		shopVO2.setShoploc("ï¿½ï¿½é¥«ï¿½ï¿½ï¿½cï¿½Ï¤ï¿½ï¿½ï¿½ï¿½ï¿½");
+//		shopVO2.setShopcy("ï¿½ï¿½ï¿½Hï¿½ï¿½*10");
 //		shopVO2.setShopphone(933103579);
 //		shopVO2.setStatus(1);
 //		dao.update(shopVO2);
 
 
-//		// ¬d¸ß
+//		// ï¿½dï¿½ï¿½
 //		ShopVO shopVO3 = dao.findByPrimaryKey("DS00001");
 //		System.out.print(shopVO3.getShopno() + ",");
 //		System.out.print(shopVO3.getShopact() + ",");
@@ -501,7 +502,7 @@ public class ShopJDBCDAO implements ShopDAO_interface{
 //		System.out.println(shopVO3.getStatus());
 //		System.out.println("---------------------");
 //
-//		// ¬d¸ß
+//		// ï¿½dï¿½ï¿½
 		List<ShopVO> list = dao.getAllowedShop();
 		for (ShopVO shop : list) {
 			System.out.print(shop.getShopno() + ",");

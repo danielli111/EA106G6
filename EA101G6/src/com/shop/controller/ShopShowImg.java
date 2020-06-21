@@ -35,7 +35,6 @@ public class ShopShowImg extends HttpServlet {
                 byte[] buf = shopVo.getShopimg();
                 out.write(buf);            
             }catch(Exception e){
-            	ShopService shopSvc = new ShopService();
             	HttpSession session = req.getSession();
             	ShopVO shopVO = (ShopVO) session.getAttribute("account");
             	byte[] b = shopVO.getShopimg();

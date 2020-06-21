@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,8 @@ import com.shop.model.ShopService;
 import com.shop.model.ShopVO;
 import com.game.model.*;
 
-@WebServlet("/GameServlet")
+
+@MultipartConfig
 public class GameServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -30,7 +32,7 @@ public class GameServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
 		
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ð¨D
+		if ("getOne_For_Display".equals(action)) { // ï¿½Ó¦ï¿½select_page.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -38,42 +40,42 @@ public class GameServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************/
 				String gmno = req.getParameter("gmno");
 				
 				if (!errorMsgs.isEmpty()) {
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½ *****************************************/
 				GameService gameSvc = new GameService();
 				GameVO gameVO = gameSvc.getOneGame(gmno);
 				if (gameVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("gameVO", gameVO); // ¸ê®Æ®w¨ú¥XªºshopVOª«¥ó,¦s¤Jreq
-String url = "listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneshop.jsp
+				/*************************** 3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) *************/
+				req.setAttribute("gameVO", gameVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "listOneGame.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ listOneshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+				errorMsgs.add("è¼¸å…¥æœ‰éŒ¯:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		if ("getSome_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ð¨D
+		if ("getSome_For_Display".equals(action)) { // ï¿½Ó¦ï¿½select_page.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -81,41 +83,41 @@ RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************/
 				String gmname = req.getParameter("gmname");
 				if (!errorMsgs.isEmpty()) {
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½ *****************************************/
 				GameService gameSvc = new GameService();
 				List<GameVO> gameVO = gameSvc.getSomeGames(gmname);
 				if (gameVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("gameVO", gameVO); // ¸ê®Æ®w¨ú¥XªºshopVOª«¥ó,¦s¤Jreq
-String url = "listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneshop.jsp
+				/*************************** 3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) *************/
+				req.setAttribute("gameVO", gameVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "listSomeGame.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ listOneshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
-RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
+				errorMsgs.add("æœ‰éŒ¯èª¤:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllshop.jspªº½Ð¨D
+		if ("getOne_For_Update".equals(action)) { // ï¿½Ó¦ï¿½listAllshop.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -123,28 +125,28 @@ RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ð¨D°Ñ¼Æ ****************************************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ ****************************************/
 				String gmno = req.getParameter("gmno");
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½dï¿½ß¸ï¿½ï¿½ ****************************************/
 				GameService gameSvc = new GameService();
 				GameVO gameVO = gameSvc.getOneGame(gmno);
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
-				req.setAttribute("gameVO", gameVO); // ¸ê®Æ®w¨ú¥XªºshopVOª«¥ó,¦s¤Jreq
+				/*************************** 3.ï¿½dï¿½ß§ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) ************/
+				req.setAttribute("gameVO", gameVO); // ï¿½ï¿½Æ®wï¿½ï¿½ï¿½Xï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
 				String url = "update_game_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_shop_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);// ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ update_shop_input.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("æœ‰éŒ¯èª¤:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("listAllGame.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("update".equals(action)) { // ¨Ó¦Ûupdate_shop_input.jspªº½Ð¨D
+		if ("update".equals(action)) { // ï¿½Ó¦ï¿½update_shop_input.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -152,16 +154,15 @@ RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/*************************** 1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************/
 				String gmno = req.getParameter("gmno");
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("select_page.jsp");
 					failureView.forward(req, res);
-					return;// µ{¦¡¤¤Â_
+					return;// ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
 				String gmname = req.getParameter("gmname");
-				GameVO vo = (GameVO) session.getAttribute(gmno);
 				byte[] gmimg = null;
 
 				Part part;
@@ -169,17 +170,22 @@ RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 
 				InputStream in = null;
 				try {
-					in = part.getInputStream();
-					if (part.getSize() != 0) {
-						gmimg = new byte[in.available()];				
+					if(part.getSize() == 0) {
+						GameService gameSvc = new GameService();
+						GameVO gameVo = gameSvc.getOneGame(gmno);
+						gmimg = gameVo.getGmimg();
+						in = part.getInputStream();
+						in.read(gmimg);
 					}else {
-						gmimg = vo.getGmimg();
-					}
-					in.read(gmimg);
-					
-					
-				} catch (IOException e) {
-					errorMsgs.add("¤W¶Ç¥¢±Ñ");
+						in = part.getInputStream();					
+						gmimg = new byte[in.available()];				
+						in.read(gmimg);		
+					}						
+				}catch (IOException e) {
+					errorMsgs.add("ä¸Šå‚³å¤±æ•—");
+					in = getServletContext().getResourceAsStream("/NoData/null.jpg");
+					gmimg = new byte[in.available()];
+	          		in.read(gmimg);
 				} finally {
 					in.close();
 				}
@@ -191,41 +197,40 @@ RequestDispatcher failureView = req.getRequestDispatcher("listAllShop.jsp");
 				gameVO.setGmimg(gmimg);
 				
 
-				session.removeAttribute(gmno);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("gameVO", gameVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºshopVOª«¥ó,¤]¦s¤Jreq
-RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/update_shop_input.jsp");
+					req.setAttribute("gameVO", gameVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
+					RequestDispatcher failureView = req.getRequestDispatcher("update_game_input.jsp");
 					failureView.forward(req, res);
-					return; // µ{¦¡¤¤Â_
+					return; // ï¿½{ï¿½ï¿½ï¿½ï¿½ï¿½_
 				}
 
-				/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½×§ï¿½ï¿½ï¿½ *****************************************/
 				GameService gameSvc = new GameService();
 				gameVO = gameSvc.updateGame(gmno, gmname, gmimg);
 
-				/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("gameVO", gameVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºshopVOª«¥ó,¦s¤Jreq
-String url = "/font-end/shop/listOneShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneshop.jsp
+				/*************************** 3.ï¿½×§ï§¹ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) *************/
+				req.setAttribute("gameVO", gameVO); // ï¿½ï¿½Æ®wupdateï¿½ï¿½ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½Tï¿½ï¿½ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½sï¿½Jreq
+				String url = "listOneGame.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½×§ï¦¨ï¿½\ï¿½ï¿½,ï¿½ï¿½ï¿½listOneshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:" + e.getMessage());
-RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/update_shop_input.jsp");
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("update_shop_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("insert".equals(action)) { // ¨Ó¦Ûaddshop.jspªº½Ð¨D
+		if ("insert".equals(action)) { // ï¿½Ó¦ï¿½addshop.jspï¿½ï¿½ï¿½Ð¨D
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/*********************** 1.±µ¦¬½Ð¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z *************************/
+				/*********************** 1.ï¿½ï¿½ï¿½ï¿½ï¿½Ð¨Dï¿½Ñ¼ï¿½ - ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Bï¿½z *************************/
 
 				String gmname = req.getParameter("gmname");
 				byte[] gmimg = null;
@@ -247,25 +252,25 @@ RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/update_
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("gameVO", gameVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºshopVOª«¥ó,¤]¦s¤Jreq
-RequestDispatcher failureView = req.getRequestDispatcher("addShop.jsp");
+					req.setAttribute("gameVO", gameVO); // ï¿½tï¿½ï¿½ï¿½ï¿½Jï¿½æ¦¡ï¿½ï¿½ï¿½~ï¿½ï¿½shopVOï¿½ï¿½ï¿½ï¿½,ï¿½]ï¿½sï¿½Jreq
+					RequestDispatcher failureView = req.getRequestDispatcher("addGame.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
-				/*************************** 2.¶}©l·s¼W¸ê®Æ ***************************************/
+				/*************************** 2.ï¿½}ï¿½lï¿½sï¿½Wï¿½ï¿½ï¿½ ***************************************/
 				GameService gameSvc = new GameService();
 				gameVO = gameSvc.addGame(gmname, gmimg);
 
-				/*************************** 3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
-String url = "listAllShop.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllshop.jsp
+				/*************************** 3.ï¿½sï¿½Wï¿½ï¿½ï¿½ï¿½,ï¿½Ç³ï¿½ï¿½ï¿½ï¿½(Send the Success view) ***********/
+				String url = "listAllGame.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ï¿½sï¿½Wï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½listAllshop.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** ï¿½ï¿½Lï¿½iï¿½àªºï¿½ï¿½ï¿½~ï¿½Bï¿½z **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-RequestDispatcher failureView = req.getRequestDispatcher("/font-end/shop/addShop.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("addGame.jsp");
 				failureView.forward(req, res);
 			}
 		}
