@@ -16,7 +16,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ShopServlet</servlet-name>
-		<url-pattern>/font-end/shop/shop.do</url-pattern>
+		<url-pattern>/front-end/shop/shop.do</url-pattern>
 		<url-pattern>/back-end/shop/shop.do</url-pattern>
 	</servlet-mapping>
 	
@@ -26,7 +26,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>GameServlet</servlet-name>
-		<url-pattern>/font-end/game/game.do</url-pattern>
+		<url-pattern>/front-end/game/game.do</url-pattern>
 		<url-pattern>/back-end/game/game.do</url-pattern>
 	</servlet-mapping>
 	
@@ -36,7 +36,27 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ShopbkServlet</servlet-name>
-		<url-pattern>/font-end/shopbk/shopbk.do</url-pattern>
+		<url-pattern>/front-end/shopbk/shopbk.do</url-pattern>
 		<url-pattern>/back-end/shopbk/shopbk.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GmlistServlet</servlet-name>
+		<servlet-class>com.gmlist.controller.GmlistServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GmlistServlet</servlet-name>
+		<url-pattern>/front-end/gmlist/gmlist.do</url-pattern>
+		<url-pattern>/back-end/gmlist/gmlist.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ShoprpdtServlet</servlet-name>
+		<servlet-class>com.shoprpdt.controller.ShoprpdtServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShoprpdtServlet</servlet-name>
+		<url-pattern>/front-end/shoprpdt/shoprpdt.do</url-pattern>
+		<url-pattern>/back-end/shoprpdt/shoprpdt.do</url-pattern>
 	</servlet-mapping>
 </web-app>

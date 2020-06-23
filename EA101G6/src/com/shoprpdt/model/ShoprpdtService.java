@@ -39,7 +39,7 @@ public class ShoprpdtService {
 		
 		return shoprpdtVO;
 	}
-	public List<ShoprpdtVO> getOneEmp(String shoprpno, Integer status) {
+	public List<ShoprpdtVO> getSomeShoprpdt(String shoprpno, Integer status) {
 		return dao.findByPrimaryKey(shoprpno, status);
 	}
 	public List<ShoprpdtVO> getAll(){

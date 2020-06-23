@@ -22,10 +22,17 @@ public class GmlistService {
 	public void deleteGmlist(String gmno, String shopno) {
 		dao.delete(gmno,shopno);
 	}
-	public List<GmlistVO> findByGame(String gmno) {
+	public GmlistVO getOneGmlist(String gmno, String shopno) {
+		return dao.findByPrimaryKey(gmno, shopno);	
+	}
+
+	public List<GmlistVO> getSomeGmlistByGame(String gmno) {
 		return dao.findByGame(gmno);	
 	}
-	public List<GmlistVO> findByShop(String shopno) {
-		return dao.findByGame(shopno);	
+	public List<GmlistVO> getSomeGmlistByShop(String shopno) {
+		return dao.findByShop(shopno);	
+	}
+	public List<GmlistVO> getAll() {
+		return dao.getAll();	
 	}
 }
